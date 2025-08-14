@@ -30,6 +30,7 @@
     "@quanxiaoxiao/node-utils": "^0.16.0",
     "@quanxiaoxiao/store": "^0.10.0",
     "@quanxiaoxiao/utils": "^0.17.0",
+    "cron-parser": "^5.3.0",
     "dotenv": "^17.2.1"
   }
 }

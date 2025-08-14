@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 
+import logger from '#logger.mjs';
 import { WebsiteHref as WebsiteHrefModel } from '#models.mjs';
 
 export default async (websiteItem, input = {}) => {
@@ -26,5 +27,6 @@ export default async (websiteItem, input = {}) => {
     throw createError(403);
   }
   await websiteHrefItem.save();
+  logger.warn('[createWebsiteHref]', JSON.stringify(input));
   return websiteHrefItem;
 };

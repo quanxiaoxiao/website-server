@@ -6,6 +6,8 @@ import { toDataify } from '@quanxiaoxiao/node-utils';
 import { getState } from '#store.mjs';
 
 import websiteRoutes from './website/index.mjs';
+import websiteHrefRoutes from './websiteHref/index.mjs';
+import websiteOperationRoutes from './websiteOperation/index.mjs';
 
 export default {
   '/api/state': {
@@ -17,4 +19,6 @@ export default {
     },
   },
   ...websiteRoutes,
+  ...websiteHrefRoutes,
+  ...websiteOperationRoutes,
 };

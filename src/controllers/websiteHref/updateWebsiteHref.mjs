@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 
+import logger from '#logger.mjs';
 import { WebsiteHref as WebsiteHrefModel } from '#models.mjs';
 
 const isHrefChanged = (a, b) =>
@@ -48,9 +49,11 @@ export default async (websiteHrefItem, input) => {
     },
   );
 
-  if (result.modifiedCount === 0) {
+  if (result.matchedCount === 0) {
     throw createError(404);
   }
+
+  logger.warn('[updateWebsiteHref]', websiteHrefItem._id.toString(), JSON.stringify(input));
 
   return websiteHrefItemNext;
 };

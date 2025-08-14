@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 
+import logger from '#logger.mjs';
 import {
   Cron as CronModel,
   Website as WebsiteModel,
@@ -80,4 +81,5 @@ export default async (websiteHrefItem) => {
       },
     );
   }
+  logger.warn('[removeWebsiteHref]', websiteHrefItem._id.toString());
 };
