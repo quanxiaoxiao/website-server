@@ -38,6 +38,7 @@ const handleConnection = (socket) => {
 };
 
 const createTLSServer = () => {
+  logger.warn('Creating Tls Server');
   const state = getState();
   const server = tls.createServer(
     {
@@ -51,6 +52,7 @@ const createTLSServer = () => {
 };
 
 const createHttpServer = () => {
+  logger.warn('Creating Http Server');
   const server = net.createServer(handleConnection);
   return server;
 };
