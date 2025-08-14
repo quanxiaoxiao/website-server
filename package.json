@@ -1,0 +1,35 @@
+{
+  "name": "website-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/createHttpServer.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "imports": {
+    "#store.mjs": "./src/store/store.mjs",
+    "#selector.mjs": "./src/store/selector.mjs",
+    "#models.mjs": "./src/models/index.mjs",
+    "#logger.mjs": "./src/logger.mjs",
+    "#controllers/*": "./src/controllers/*"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^16.3.0"
+  },
+  "dependencies": {
+    "@quanxiaoxiao/datav": "^0.4.0",
+    "@quanxiaoxiao/httttp": "^0.115.0",
+    "@quanxiaoxiao/logger": "^0.0.1",
+    "@quanxiaoxiao/mongo": "^0.3.0",
+    "@quanxiaoxiao/node-utils": "^0.16.0",
+    "@quanxiaoxiao/store": "^0.10.0",
+    "@quanxiaoxiao/utils": "^0.17.0",
+    "dotenv": "^17.2.1"
+  }
+}
