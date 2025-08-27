@@ -1,11 +1,12 @@
 import createError from 'http-errors';
 
-import createWebsite from '#controllers/website/createWebsite.mjs';
 import getWebsiteById from '#controllers/website/getWebsiteById.mjs';
 import getWebsites from '#controllers/website/getWebsites.mjs';
 import removeWebsite from '#controllers/website/removeWebsite.mjs';
 import setWebsitesOrders from '#controllers/website/setWebsitesOrders.mjs';
 import updateWebsite from '#controllers/website/updateWebsite.mjs';
+
+import createWebsite from './createWebsite.mjs';
 
 export default {
   '/api/websites': {

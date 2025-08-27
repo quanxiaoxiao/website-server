@@ -10,6 +10,7 @@ export default async (input) => {
   try {
     await websiteItem.validate();
   } catch (error) {
+    console.log(input);
     throw createError(400, JSON.stringify(error.errors));
   }
 
