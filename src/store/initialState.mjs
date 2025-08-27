@@ -1,7 +1,10 @@
 import { select } from '@quanxiaoxiao/datav';
 import * as dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({
+  debug: false,
+  quiet: true,
+});
 
 export default {
   dateTimeCreate: Date.now(),
