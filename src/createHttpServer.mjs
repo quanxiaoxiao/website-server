@@ -63,7 +63,7 @@ const startHttpServer = () => {
   const server = state.tls && state.tls.cert ? createTLSServer() : createHttpServer();
   return new Promise((resolve, reject) => {
     server.on('error', (error) => {
-      logger.error('Server error:', error);
+      console.error('Server error:', error);
       reject(error);
     });
 
@@ -89,15 +89,14 @@ const gracefulShutdown = async (signal = 'SIGINT') => {
 
 const setupProcessHandlers = () => {
   process.on('uncaughtException', (error) => {
-    logger.error('Uncaught Exception:', error);
+    logger.error(`Uncaught Exception: ${error.message}`);
     console.log('----- uncaught exception start -----');
     console.error(error);
     console.log('----- uncaught exception end -----');
     process.exit(1);
   });
 
-  process.on('unhandledRejection', (reason, promise) => {
-    logger.error('Unhandled Promise Rejection at:', promise, 'reason:', reason);
+  process.on('unhandledRejection', (reason) => {
     console.error('Unhandled Promise Rejection:', reason);
   });
 

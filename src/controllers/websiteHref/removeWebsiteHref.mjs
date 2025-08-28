@@ -81,5 +81,5 @@ export default async (websiteHrefItem) => {
       },
     );
   }
-  logger.warn('[removeWebsiteHref]', websiteHrefItem._id.toString());
+  logger.warn(`[removeWebsiteHref] ${websiteHrefItem._id.toString()}`);
 };

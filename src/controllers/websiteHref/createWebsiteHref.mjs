@@ -27,6 +27,6 @@ export default async (websiteItem, input = {}) => {
     throw createError(403);
   }
   await websiteHrefItem.save();
-  logger.warn('[createWebsiteHref]', JSON.stringify(input));
+  logger.warn(`[createWebsiteHref] ${JSON.stringify(input)}`);
   return websiteHrefItem;
 };

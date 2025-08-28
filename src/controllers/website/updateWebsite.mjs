@@ -43,6 +43,6 @@ export default async (websiteItem, input) => {
   if (result.matchedCount === 0) {
     throw createError(404);
   }
-  logger.warn('[updateWebsite]', websiteItem._id.toString(), JSON.stringify(input));
+  logger.warn(`[updateWebsite] ${websiteItem._id.toString()} ${JSON.stringify(input)}`);
   return websiteItemNext;
 };

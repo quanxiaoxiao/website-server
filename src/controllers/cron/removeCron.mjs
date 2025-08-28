@@ -23,5 +23,5 @@ export default async (cronItem) => {
   if (ret.matchedCount === 0) {
     throw createError(404);
   }
-  logger.warn('[removeCron]', cronItem._id.toString());
+  logger.warn(`[removeCron] ${cronItem._id.toString()}`);
 };

@@ -28,7 +28,7 @@ export default async (input) => {
 
   await websiteItem.save();
 
-  logger.warn('[createWebsite]', JSON.stringify(input));
+  logger.warn(`[createWebsite] ${JSON.stringify(input)}`);
 
   return websiteItem;
 };

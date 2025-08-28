@@ -53,7 +53,7 @@ export default async (websiteHrefItem, input) => {
     throw createError(404);
   }
 
-  logger.warn('[updateWebsiteHref]', websiteHrefItem._id.toString(), JSON.stringify(input));
+  logger.warn(`[updateWebsiteHref] ${websiteHrefItem._id.toString()} ${JSON.stringify(input)}`);
 
   return websiteHrefItemNext;
 };

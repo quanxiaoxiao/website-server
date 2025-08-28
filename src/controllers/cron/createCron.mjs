@@ -30,6 +30,6 @@ export default async (input) => {
     throw createError(400);
   }
   await cronItem.save();
-  logger.warn('[createCron]', JSON.stringify(input));
+  logger.warn(`[createCron] ${JSON.stringify(input)}`);
   return cronItem;
 };
