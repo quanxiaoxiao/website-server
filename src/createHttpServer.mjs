@@ -22,7 +22,7 @@ const initializeServer = async () => {
     dispatch('routeMatchList', generateRouteMatchList(routes));
     logger.info('Route match list generated');
   } catch (error) {
-    logger.error('Server initialization failed:', error);
+    logger.error(`Server initialization failed: ${error.message}`);
     throw error;
   }
 };
@@ -40,6 +40,9 @@ const handleConnection = (socket) => {
 const createTLSServer = () => {
   logger.warn('Creating Tls Server');
   const state = getState();
+  if (!state.tls?.cert || !state.tls?.key) {
+    throw new Error('TLS certificate or key is missing');
+  }
   const server = tls.createServer(
     {
       cert: state.tls.cert,
@@ -62,14 +65,21 @@ const startHttpServer = () => {
   const port = getValue('server.port');
   const server = state.tls && state.tls.cert ? createTLSServer() : createHttpServer();
   return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error(`Server failed to start within timeout on port ${port}`));
+    }, 10000);
+
     server.on('error', (error) => {
-      console.error('Server error:', error);
+      clearTimeout(timeoutId);
+      logger.error('Server error:', error);
       reject(error);
     });
 
     server.listen(port, () => {
-      logger.warn(`Server listening on port ${port}`);
-      console.log(`server listen at \`${port}\``);
+      clearTimeout(timeoutId);
+      const protocol = state.tls?.cert ? 'HTTPS' : 'HTTP';
+      logger.info(`${protocol} Server listening on port ${port}`);
+      console.log(`${protocol} server listening on port ${port}`);
       resolve(server);
     });
   });
@@ -89,15 +99,19 @@ const gracefulShutdown = async (signal = 'SIGINT') => {
 
 const setupProcessHandlers = () => {
   process.on('uncaughtException', (error) => {
+    console.error('=== UNCAUGHT EXCEPTION ===');
     logger.error(`Uncaught Exception: ${error.message}`);
-    console.log('----- uncaught exception start -----');
     console.error(error);
-    console.log('----- uncaught exception end -----');
+    console.error('=========================');
     process.exit(1);
   });
 
   process.on('unhandledRejection', (reason) => {
+    console.error('=== UNHANDLED REJECTION ===');
+    logger.error(`Unhandled Promise Rejection at: ${reason}`);
     console.error('Unhandled Promise Rejection:', reason);
+    console.error('===========================');
+    process.exit(1);
   });
 
   process.on('SIGINT', () => gracefulShutdown('SIGINT'));
@@ -112,11 +126,10 @@ const main = async () => {
     await startHttpServer();
     logger.info('Server started successfully');
   } catch (error) {
-    logger.error('Failed to start server:', error);
+    logger.error(`Failed to start server: ${error.message}`);
     console.error('Failed to start server:', error);
     process.exit(1);
   }
-
 };
 
-process.nextTick(main);
+setImmediate(main);
