@@ -28,11 +28,20 @@ const initializeServer = async () => {
 };
 
 const handleConnection = (socket) => {
-  return handleSocketRequest({
+  if (socket.destroyed) {
+    return;
+  }
+  const remoteAddress = socket.remoteAddress;
+  handleSocketRequest({
     socket,
     ...createHttpRequestHandler({
       list: selectRouteMatchList(),
-      logger,
+      onRouteUnmatch: (ctx) => {
+        logger.warn(`404 Not found - ClientIP: ${remoteAddress} - Path: ${ctx.request.path}`);
+      },
+      onHttpError: (ctx) => {
+        console.error(ctx.error);
+      },
     }),
   });
 };
